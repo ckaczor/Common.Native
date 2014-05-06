@@ -104,6 +104,9 @@ namespace Common.Native
             DwmCompositionChanged = 0x031e,
             User = 0x0400,
             App = 0x8000,
+
+            EnterSizeMove = 0x0231,
+            ExitSizeMove = 0x0232
         }
 
         public enum HitTestValues

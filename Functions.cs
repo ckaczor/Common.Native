@@ -155,6 +155,9 @@ namespace Common.Native
             [DllImport("user32.dll")]
             public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            public static extern uint RegisterWindowMessage(string lpString);
+
             public static IntPtr SetWindowLongPtrSmart(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
             {
                 if (IntPtr.Size == 8)
