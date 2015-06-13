@@ -69,6 +69,11 @@ namespace Common.Native
                 User32.SetWindowPlacement(hWnd, ref windowPlacement);
             }
 
+            public static void SystemCommand(IntPtr hWnd, Constants.SysCommand command)
+            {
+                User32.SendMessage(hWnd, (uint) Constants.WindowMessage.SysCommand, (IntPtr) command, IntPtr.Zero);
+            }
+
             public static Icon GetSmallIcon(IntPtr hWnd)
             {
                 try
