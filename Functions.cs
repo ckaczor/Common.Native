@@ -139,6 +139,9 @@ namespace Common.Native
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
             public static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
@@ -148,8 +151,11 @@ namespace Common.Native
             [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern IntPtr GetParent(IntPtr hWnd);
 
+            [DllImport("user32", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
+            public static extern IntPtr GetWindow(IntPtr hwnd, int wFlag);
+
             [DllImport("user32.dll")]
-            public static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
+            public static extern long GetWindowLong(IntPtr hWnd, Constants.GetWindowLongFields nIndex);
 
             [DllImport("user32.dll")]
             public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
@@ -162,6 +168,10 @@ namespace Common.Native
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern uint RegisterWindowMessage(string lpString);
+
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool IsWindowVisible(IntPtr hWnd);
 
             public static IntPtr SetWindowLongPtrSmart(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
             {
@@ -181,8 +191,18 @@ namespace Common.Native
             {
                 if (IntPtr.Size > 4)
                     return GetClassLongPtr64(hWnd, nIndex);
-                
+
                 return new IntPtr(GetClassLongPtr32(hWnd, nIndex));
+            }
+
+            public static bool HasStyle(long windowStyle, Constants.WindowStyles checkStyle)
+            {
+                return ((windowStyle & (long) checkStyle) == (long) checkStyle);
+            }
+
+            public static bool HasExtendedStyle(long windowStyle, Constants.ExtendedWindowStyles checkStyle)
+            {
+                return ((windowStyle & (long) checkStyle) == (long) checkStyle);
             }
         }
 

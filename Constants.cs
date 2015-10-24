@@ -138,13 +138,40 @@ namespace Common.Native
         }
 
         [Flags]
-        public enum ExtendedWindowStyles
+        public enum WindowStyles : uint
         {
+            Overlapped = 0x00000000,
+            Caption = 0x00C00000,
+            SystemMenu = 0x00080000,
+            ThickFrame = 0x00040000,
+            MinimizeBox = 0x00020000,
+            MaximizeBox = 0x00010000,
+            Visible = 0x10000000,
+            Child = 0x40000000,
+            Popup = 0x80000000,
+            OverlappedWindow = Overlapped | Caption | SystemMenu | ThickFrame | MinimizeBox | MaximizeBox
+        }
+
+        [Flags]
+        public enum ExtendedWindowStyles : long
+        {
+            DialogModalFrame = 0x00000001,
             ToolWindow = 0x00000080,
+            AppWindow = 0x00040000,
+            WindowEdge = 0x00000100,
+            ClientEdge = 0x00000200,
+            OverlappedWindow = WindowEdge | ClientEdge
+        }
+
+        public enum GetWindowFields
+        {
+            Owner = 4
         }
 
         public enum GetWindowLongFields
         {
+            Parent = -8,
+            Style = -16,
             ExStyle = -20,
         }
 
