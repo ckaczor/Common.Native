@@ -154,7 +154,10 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+
 # NuGet Packages
 packages/*
 *.nupkg
 !packages/build/
+
+.vs/
